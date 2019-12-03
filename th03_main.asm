@@ -207,7 +207,7 @@ _envp		= dword	ptr  0Ch
 		mov	bp, sp
 		push	si
 		call	game_init_main pascal, ds, offset aCOul
-		call	sub_A346
+		call	yume_cfg_loader
 		or	ax, ax
 		jz	short loc_9775
 		mov	_snd_midi_active, 0
@@ -1501,17 +1501,17 @@ sub_A310	endp
 
 ; Attributes: bp-based frame
 
-sub_A346	proc near
+yume_cfg_loader	proc near
 
 var_8		= byte ptr -8
 var_3		= word ptr -3
 
-		enter	8, 0
+		enter	8, 0			; https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp
 		push	si
-		push	ds
+		push	ds				; si ds
 		push	offset aYume_cfg ; "YUME.CFG"
-		call	file_ropen
-		push	ss
+		call	file_ropen		; open file
+		push	ss				; stack section
 		lea	ax, [bp+var_8]
 		push	ax
 		push	8
@@ -1524,7 +1524,7 @@ var_3		= word ptr -3
 		pop	si
 		leave
 		retn
-sub_A346	endp
+yume_cfg_loader	endp
 
 ; ---------------------------------------------------------------------------
 		db 0
@@ -19937,7 +19937,7 @@ loc_14C36:
 		mov	byte ptr [bx], 2
 		cmp	di, 2
 		jge	short loc_14C4E
-		mov	byte ptr [bx+1Eh], 0B0h	; '°'
+		mov	byte ptr [bx+1Eh], 0B0h	; 'ï¿½'
 		jmp	short loc_14C56
 ; ---------------------------------------------------------------------------
 
@@ -27680,7 +27680,7 @@ loc_18C95:
 		cmp	ax, 2
 		jge	short loc_18CD2
 		call	snd_se_play pascal, 10
-		mov	PaletteTone, 0AAh ; 'ª'
+		mov	PaletteTone, 0AAh ; 'ï¿½'
 		mov	_palette_changed, 1
 		mov	al, byte ptr word_1FE88
 		mov	ah, 0
@@ -35802,7 +35802,7 @@ main_11_TEXT	ends
 		db    0
 		db    0
 		db    0
-aCOul		db '–²‹ó2.dat',0
+aCOul		db 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2.dat',0
 aGameft_bft	db 'GAMEFT.bft',0
 aOp		db 'op',0
 ; char arg0[]
@@ -36198,11 +36198,11 @@ asc_1DD84	db '        ',0
 		db  2Dh	; -
 		db  24h	; $
 		db  2Dh	; -
-		db 0A8h	; ¨
+		db 0A8h	; ï¿½
 		db  20h
 		db  28h	; (
 		db  28h	; (
-		db 0A8h	; ¨
+		db 0A8h	; ï¿½
 		db  2Fh	; /
 		db 0AEh
 		db  34h	; 4
@@ -36368,15 +36368,15 @@ word_1DDAC	dw 2AB6h
 		db  0Fh
 		db    0
 		db    7
-aMAX_COMBO	db '‚l‚`‚w@‚b‚‚‚‚‚@@@~',0
-aGAUGE_ATTACK_TIMES	db 'ƒQ[ƒWƒAƒ^ƒbƒN‰ñ”@@@~',0
-aBOSS_ATTACK_TIMES	db 'ƒ{ƒXƒAƒ^ƒbƒN‰ñ”@@@@~',0
-aBOSS_REVERSAL_TIMES	db 'ƒ{ƒXƒŠƒo[ƒTƒ‹‰ñ”@@@~',0
-aBOSS_PANIC_TIMES	db 'ƒ{ƒXƒpƒjƒbƒN‰ñ”@@@@~',0
-aTOTAL	db '@@@‚s‚n‚s‚`‚k@@@@@',0
-aWINNER_BONUS	db '@@‚v‚h‚m‚m‚d‚q@‚a‚n‚m‚t‚r@@',0
-aALL_CLEAR	db '@@@‚`‚k‚k@‚b‚k‚d‚`‚qII@@',0
-aPLAYER_REM	db 'c‚èl”@@@@@@@@~',0
+aMAX_COMBO	db 'ï¿½lï¿½`ï¿½wï¿½@ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½@ï¿½@ï¿½~',0
+aGAUGE_ATTACK_TIMES	db 'ï¿½Qï¿½[ï¿½Wï¿½Aï¿½^ï¿½bï¿½Nï¿½ñ”@ï¿½@ï¿½@ï¿½~',0
+aBOSS_ATTACK_TIMES	db 'ï¿½{ï¿½Xï¿½Aï¿½^ï¿½bï¿½Nï¿½ñ”@ï¿½@ï¿½@ï¿½@ï¿½~',0
+aBOSS_REVERSAL_TIMES	db 'ï¿½{ï¿½Xï¿½ï¿½ï¿½oï¿½[ï¿½Tï¿½ï¿½ï¿½ñ”@ï¿½@ï¿½@ï¿½~',0
+aBOSS_PANIC_TIMES	db 'ï¿½{ï¿½Xï¿½pï¿½jï¿½bï¿½Nï¿½ñ”@ï¿½@ï¿½@ï¿½@ï¿½~',0
+aTOTAL	db 'ï¿½@ï¿½@ï¿½@ï¿½sï¿½nï¿½sï¿½`ï¿½kï¿½@ï¿½@ï¿½@ï¿½@ï¿½@',0
+aWINNER_BONUS	db 'ï¿½@ï¿½@ï¿½vï¿½hï¿½mï¿½mï¿½dï¿½qï¿½@ï¿½aï¿½nï¿½mï¿½tï¿½rï¿½@ï¿½@',0
+aALL_CLEAR	db 'ï¿½@ï¿½@ï¿½@ï¿½`ï¿½kï¿½kï¿½@ï¿½bï¿½kï¿½dï¿½`ï¿½qï¿½Iï¿½Iï¿½@ï¿½@',0
+aPLAYER_REM	db 'ï¿½cï¿½ï¿½lï¿½ï¿½ï¿½@ï¿½@ï¿½@ï¿½@ï¿½@ï¿½@ï¿½@ï¿½@ï¿½~',0
 		db 0
 		db '<',0
 		db    0
