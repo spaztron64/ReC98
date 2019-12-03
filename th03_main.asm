@@ -256,7 +256,7 @@ loc_9764:
 		push	offset arg0	; "mainl"
 
 loc_9770:
-		nopcall	sub_B454
+		nopcall	game_exit_prep
 
 loc_9775:
 		pop	si
@@ -2512,8 +2512,9 @@ sub_B3F6	endp
 
 ; Attributes: bp-based frame
 
-; int __stdcall	__far sub_B454(char *arg0)
-sub_B454	proc far
+; int __stdcall	__far game_exit_prep(char *arg0) - original
+; int __stdcall	__far game_exit_prep(char *arg0)
+game_exit_prep	proc far
 
 _arg0		= dword	ptr  6
 
@@ -2536,7 +2537,7 @@ _arg0		= dword	ptr  6
 		add	sp, 0Ch
 		pop	bp
 		retf	4
-sub_B454	endp
+game_exit_prep	endp
 
 
 ; =============== S U B	R O U T	I N E =======================================
